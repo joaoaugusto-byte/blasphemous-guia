@@ -1,0 +1,756 @@
+<!doctype html><html lang="pt-BR"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>Sob o Capirote</title>
+<meta name="description" content="Blasphemous I e II em nove zonas: o Milagre, a Mea Culpa, a Culpa, as 17 oracoes e as tres armas.">
+<meta name="theme-color" content="#12100e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jacquard+24&family=Silkscreen:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap">
+</head><body>
+<style>
+  :root{
+    color-scheme: dark;
+    --ink:#ece3ce;
+    --dim:#a99a7e;
+    --faint:#7a6f5c;
+    --blood:#b5372a;
+    --bone:#e6dcc3;
+    --z-acc:#d9b25c;
+    --tint:0;
+    --disp:'Jacquard 24', Georgia, serif;
+    --ui:'Silkscreen', 'Courier New', monospace;
+    --body:'Crimson Pro', Georgia, 'Times New Roman', serif;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:#12100e;color:var(--ink);font-family:var(--body);font-weight:300;
+    font-size:18px;line-height:1.66;padding:0;margin:0;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
+
+  .veil{position:fixed;inset:0;pointer-events:none;z-index:40}
+  .veil i{position:absolute;inset:0;display:block}
+  .veil .scan{background:repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 1px, transparent 1px 3px);opacity:.55}
+  .veil .vig{box-shadow:inset 0 0 180px 60px rgba(4,3,2,.92)}
+  .veil .blood{background:radial-gradient(120% 80% at 50% 110%, rgba(181,55,42,.55), transparent 62%);opacity:calc(var(--tint)*.6);transition:opacity 1.2s ease}
+
+  .inner{max-width:900px;margin:0 auto;padding-inline:22px;position:relative;z-index:2}
+  p{margin:0 0 .9em}
+  b,strong{font-weight:600}
+  em{font-style:italic}
+  button{font:inherit;color:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--z-acc);outline-offset:3px}
+  ::selection{background:var(--blood);color:#fff}
+  .ui{font-family:var(--ui);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;line-height:1.7}
+
+  /* ——— portada ——— */
+  .gate{
+    min-height:90vh;display:grid;align-content:center;justify-items:center;text-align:center;gap:6px;
+    background:linear-gradient(180deg,#0a0908 0%,#171319 62%,#1a1a24 100%);position:relative;overflow:hidden;
+    padding-block:70px 90px;
+  }
+  .gate .ui{color:var(--faint)}
+  .gate h1{
+    font-family:var(--disp);font-weight:400;font-size:clamp(3.8rem,18vw,10.5rem);line-height:.82;margin:.06em 0 0;
+    color:#f3ead4;text-shadow:0 0 44px rgba(217,178,92,.34), 0 5px 0 #0a0908;
+  }
+  .gate .sub{font-family:var(--ui);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:#d9b25c;margin-top:12px}
+  .gate .say{max-width:40ch;color:#bdae93;font-style:italic;margin-top:24px;font-size:1.05rem}
+  .gate .down{margin-top:32px;font-family:var(--ui);font-size:.56rem;letter-spacing:.24em;color:var(--faint);animation:sink 2.6s ease-in-out infinite}
+  @keyframes sink{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(7px);opacity:1}}
+  .capirote{width:min(200px,50vw);height:auto;image-rendering:pixelated;filter:drop-shadow(0 0 26px rgba(217,178,92,.22))}
+
+  /* ——— estratos ——— */
+  .stratum{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--z-a),var(--z-b));padding-block:clamp(52px,9vw,100px)}
+  .silho{position:absolute;left:0;right:0;width:100%;height:clamp(66px,12vw,140px);image-rendering:pixelated;opacity:.5;pointer-events:none;z-index:1}
+  .silho.top{top:-1px}
+  .silho.bot{bottom:-1px}
+
+  .zonehead{display:grid;gap:4px;margin-bottom:clamp(24px,4vw,40px)}
+  .zonehead .depth{font-family:var(--ui);font-size:.56rem;letter-spacing:.24em;color:var(--z-acc)}
+  .zonehead h2{font-family:var(--disp);font-weight:400;font-size:clamp(2.3rem,8.2vw,4.7rem);line-height:.9;margin:0;color:var(--bone);text-shadow:0 4px 0 rgba(0,0,0,.55)}
+  .zonehead .alt{font-family:var(--ui);font-size:.56rem;letter-spacing:.22em;color:var(--dim)}
+  .js .zonehead{opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease}
+  .js .zonehead.seen{opacity:1;transform:none}
+
+  .testament{position:relative;z-index:2;text-align:center;padding-block:clamp(36px,6vw,64px)}
+  .testament .rule{height:2px;background:repeating-linear-gradient(90deg,var(--z-acc) 0 6px,transparent 6px 12px);opacity:.6}
+  .testament .t{font-family:var(--disp);font-size:clamp(1.6rem,5vw,2.6rem);color:var(--bone);margin:14px 0 2px;line-height:1}
+  .testament .s{font-family:var(--ui);font-size:.56rem;letter-spacing:.24em;color:var(--dim)}
+
+  .ledge{
+    position:relative;z-index:2;background:rgba(6,5,4,.42);border-top:2px solid rgba(236,227,206,.16);
+    box-shadow:0 26px 50px -30px #000;padding:clamp(20px,3.4vw,32px);max-width:64ch;
+  }
+  .ledge + .ledge{margin-top:18px}
+  .ledge.right{margin-left:auto}
+  .ledge h3{font-family:var(--disp);font-weight:400;font-size:1.85rem;line-height:1;margin:0 0 .4em;color:var(--z-acc)}
+  .ledge .lede{font-size:1.1rem;color:var(--ink)}
+  .ledge p{color:#cdc2ab}
+  .wide{max-width:none}
+  .quote{border-left:2px solid var(--z-acc);padding-left:14px;font-style:italic;color:#cdc2ab}
+  .quote cite{display:block;font-family:var(--ui);font-size:.54rem;letter-spacing:.16em;font-style:normal;color:var(--faint);margin-top:8px}
+
+  dl.sys{margin:0;display:grid;gap:14px}
+  dl.sys dt{font-family:var(--ui);font-size:.6rem;letter-spacing:.14em;color:var(--z-acc)}
+  dl.sys dd{margin:4px 0 0;color:#cdc2ab;font-size:1rem}
+
+  /* ——— culpa ——— */
+  .culpa{display:grid;gap:15px}
+  .bar{height:14px;border:2px solid rgba(236,227,206,.2);background:#0d0b09;padding:2px}
+  .bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(90deg,#b5372a 0 6px,#8d2a20 6px 12px);transition:width .4s steps(8)}
+  .readout{display:flex;flex-wrap:wrap;gap:8px 24px;font-family:var(--ui);font-size:.58rem;letter-spacing:.12em;color:var(--dim)}
+  .readout b{color:var(--ink);font-weight:400}
+  .frags{display:flex;flex-wrap:wrap;gap:6px;min-height:22px}
+  .frag{font-family:var(--ui);font-size:.52rem;letter-spacing:.08em;color:#e8b0a6;border:1px solid #5d1f19;background:rgba(181,55,42,.16);padding:3px 7px}
+  .cmds{display:flex;flex-wrap:wrap;gap:9px}
+  .cmd{
+    font-family:var(--ui);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+    background:#100d0b;border:2px solid rgba(236,227,206,.22);color:var(--ink);padding:9px 13px;
+    box-shadow:0 3px 0 rgba(0,0,0,.6);transition:border-color .2s,color .2s,transform .08s;
+  }
+  .cmd:hover{border-color:var(--z-acc);color:var(--z-acc)}
+  .cmd:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.6)}
+  .cmd:disabled{opacity:.36;cursor:not-allowed}
+  .cmd.red:hover{border-color:var(--blood);color:#e8867a}
+  .oracle{font-style:italic;color:#bdae93;border-left:2px solid var(--blood);padding-left:14px;min-height:3.2em}
+
+  /* ——— orações ——— */
+  .jondo{display:grid;margin-top:6px}
+  .song{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:4px 24px;padding:12px 0;border-bottom:1px solid rgba(236,227,206,.09)}
+  .song .pr{font-family:var(--disp);font-size:1.22rem;line-height:1.1;color:var(--ink)}
+  .song .palo{font-family:var(--ui);font-size:.53rem;letter-spacing:.14em;color:var(--z-acc);display:block;margin-bottom:4px}
+  .song .txt{font-size:.96rem;color:#c3b79f}
+  .tagdlc{font-family:var(--ui);font-size:.46rem;letter-spacing:.1em;color:var(--faint);border:1px solid rgba(236,227,206,.18);padding:1px 4px;margin-left:6px;vertical-align:middle}
+
+  /* ——— chefes ——— */
+  .procgrp{font-family:var(--ui);font-size:.56rem;letter-spacing:.2em;color:var(--z-acc);margin:26px 0 4px;padding-top:14px;border-top:1px solid rgba(236,227,206,.14)}
+  .procgrp:first-child{margin-top:0;padding-top:0;border-top:0}
+  .boss{display:grid;gap:3px;padding:14px 0;border-bottom:1px solid rgba(236,227,206,.09)}
+  .boss .nm{font-family:var(--disp);font-size:1.4rem;line-height:1.05;color:var(--ink)}
+  .boss .ep{font-family:var(--ui);font-size:.52rem;letter-spacing:.12em;color:var(--z-acc)}
+  .boss p{margin:4px 0 0;font-size:.96rem;color:#c3b79f}
+
+  /* ——— armas ——— */
+  .weapons{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .weap{background:rgba(6,5,4,.5);border:2px solid rgba(236,227,206,.14);padding:16px;display:grid;gap:8px;text-align:left;transition:border-color .2s,background .2s}
+  .weap:hover{border-color:rgba(236,227,206,.4)}
+  .weap[aria-pressed="true"]{border-color:var(--z-acc);background:rgba(20,16,12,.8)}
+  .weap canvas{width:100%;height:46px;image-rendering:pixelated}
+  .weap .wn{font-family:var(--disp);font-size:1.28rem;line-height:1;color:var(--ink)}
+  .weap .wr{font-family:var(--ui);font-size:.5rem;letter-spacing:.1em;color:var(--z-acc)}
+  #weapOut{margin-top:16px}
+  #weapOut p{margin:0 0 .7em}
+  #weapOut .stats{display:flex;flex-wrap:wrap;gap:6px 20px;font-family:var(--ui);font-size:.54rem;letter-spacing:.1em;color:var(--dim);margin-bottom:10px}
+  #weapOut .stats b{color:var(--z-acc);font-weight:400}
+  #weapOut .key{font-family:var(--ui);font-size:.56rem;letter-spacing:.12em;color:var(--z-acc);display:block;margin-top:8px}
+
+  /* ——— retábulo ——— */
+  .altar{display:grid;grid-template-columns:minmax(0,262px) minmax(0,1fr);gap:26px;align-items:start}
+  .slots{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+  .slot{aspect-ratio:1;padding:0;background:#0e0c0a;border:2px solid rgba(236,227,206,.16);display:grid;place-items:center;transition:border-color .16s}
+  .slot:hover{border-color:rgba(236,227,206,.44)}
+  .slot.tied{border-color:var(--z-acc);box-shadow:inset 0 0 0 1px rgba(201,162,74,.35)}
+  .slot span{width:56%;aspect-ratio:1;display:block;box-shadow:inset -2px -2px 0 rgba(0,0,0,.45),inset 2px 2px 0 rgba(255,255,255,.18)}
+  .pick{display:grid;gap:3px}
+  .pk{display:flex;align-items:center;gap:9px;background:none;border:0;border-bottom:1px solid rgba(236,227,206,.09);padding:7px 2px;text-align:left;font-size:.93rem;color:#c3b79f;width:100%;transition:color .18s}
+  .pk:hover{color:var(--ink)}
+  .pk[aria-pressed="true"]{color:var(--z-acc)}
+  .pk i{width:13px;height:13px;flex:none;box-shadow:inset -2px -2px 0 rgba(0,0,0,.45)}
+  .pk em{margin-left:auto;font-style:normal;font-family:var(--ui);font-size:.48rem;letter-spacing:.1em;color:var(--faint)}
+  .favs{display:grid;gap:9px;margin-top:6px}
+  .favs p{margin:0;font-size:.94rem;color:#c3b79f}
+  .favs b{display:block;font-family:var(--ui);font-size:.52rem;letter-spacing:.12em;color:var(--z-acc)}
+
+  .end{background:linear-gradient(180deg,#2b2a26,#0a0908);padding-block:clamp(48px,8vw,92px)}
+  .end .q{font-family:var(--disp);font-size:clamp(1.7rem,5.4vw,2.9rem);line-height:1.05;color:var(--bone);max-width:22ch;margin:0 auto 22px;text-align:center}
+  .colofao{max-width:60ch;margin:0 auto;font-size:.87rem;color:#8c8271;text-align:center}
+  .colofao b{display:block;font-family:var(--ui);font-size:.52rem;letter-spacing:.2em;color:var(--faint);margin-bottom:.8em}
+  .colofao a{color:#a99a7e}
+
+  @media (max-width:760px){
+    .weapons{grid-template-columns:1fr}
+    .altar{grid-template-columns:1fr}
+    .song{grid-template-columns:1fr;gap:2px}
+    .ledge.right{margin-left:0}
+  }
+</style>
+
+<div class="veil" aria-hidden="true"><i class="scan"></i><i class="blood"></i><i class="vig"></i></div>
+
+<header class="gate">
+  <canvas class="capirote" id="capirote" width="84" height="108" role="img" aria-label="Silhueta do Penitente em pixel art"></canvas>
+  <p class="ui">Blasphemous I &amp; II · corte vertical de Cvstodia</p>
+  <h1>Sob o Capirote</h1>
+  <p class="sub">nove zonas · duas peregrinações · um milagre</p>
+  <p class="say">Uma vontade divina, igualmente piedosa e cruel, que tornou visível toda dor da alma. Chamaram-na de Milagre.</p>
+  <p class="down">↓ desça</p>
+</header>
+
+<main>
+
+  <!-- ZONA 01 -->
+  <div class="stratum" style="--z-a:#1a1a24;--z-b:#221d24;--z-acc:#d9b25c">
+    <canvas class="silho bot" data-sil="spires" data-par="26" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="testament">
+        <div class="rule"></div>
+        <p class="t">Testamento I</p>
+        <p class="s">Cvstodia · 2019 · a descida</p>
+      </div>
+      <div class="zonehead">
+        <p class="depth">Zona 01 — o alto</p>
+        <h2>Telhados da Arquicatedral</h2>
+        <p class="alt">Archcathedral Rooftops</p>
+      </div>
+      <div class="ledge">
+        <h3>Quem carrega o capirote</h3>
+        <p class="lede">O Penitente: armadura prateada, cordão vermelho na cintura, elmo pontudo em forma de capirote. Não fala uma palavra no jogo inteiro — o silêncio é a penitência dele.</p>
+        <p>É o último sobrevivente da <b>Irmandade do Silencioso Pesar</b>, congregação que fez voto de silêncio em espelho ao silêncio do <b>Torcido</b>, a figura que chamam de Pai. A Irmandade inteira foi expulsa por alguma falta que o jogo nunca explica direito. Segundo o quadrinho <em>The Kneeling</em>, foi o próprio Milagre que trouxe o Penitente de volta dos mortos.</p>
+      </div>
+      <div class="ledge right">
+        <h3>Que tipo de jogo é</h3>
+        <p>Metroidvania 2D de combate lento e deliberado. Você não corre, não dá dash, não encadeia vinte golpes: lê o inimigo, espera o golpe telegrafado e responde no intervalo. Mais perto de <em>Castlevania</em> do que de <em>Hollow Knight</em> — e com muito mais dor de barriga.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 02 -->
+  <div class="stratum" style="--z-a:#221d24;--z-b:#241f1a;--z-acc:#bda06a">
+    <canvas class="silho bot" data-sil="roots" data-par="22" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 02 — a origem</p>
+        <h2>Berço das Três Palavras</h2>
+        <p class="alt">Knot of the Three Words</p>
+      </div>
+      <div class="ledge wide">
+        <h3>O Milagre</h3>
+        <p class="lede">Foi aqui que ele se manifestou pela primeira vez. Deogracias chama esse evento de Primeiro Milagre, e dele nasce a figura do Torcido.</p>
+        <p class="quote">Culpa, arrependimento, luto e toda dor da alma passaram a se manifestar de forma visível e tangível — às vezes como graça e bênção, às vezes como castigo e corrupção. Uma vontade divina igualmente piedosa e cruel, que ninguém jamais conseguiu desembaraçar.
+          <cite>paráfrase de Deogracias, no Berço das Três Palavras</cite></p>
+        <p>O Milagre atende preces <b>ao pé da letra</b>. Todo monstro de Cvstodia já foi gente: gente atendida. Socorro pediu para carregar as feridas dos outros e sofre sem fim. Quirce foi queimado por uma heresia que não cometeu e voltou das chamas com o fogo dentro. Um reino inteiro virou sal por adorar o ídolo errado. Três irmãs pediram juntas e viraram uma só coisa.</p>
+        <p>Por trás disso estavam as <b>Altas Vontades</b>, que governavam o Milagre do outro lado do Sonho, no Caminho das Antigas Procissões. Elas não o criaram: o Milagre é mais velho que elas — e pode até tê-las criado. Só lhe deram força e corpo em Cvstodia.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 03 -->
+  <div class="stratum" style="--z-a:#241f1a;--z-b:#2b2419;--z-acc:#e0c68a">
+    <canvas class="silho bot" data-sil="village" data-par="18" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 03 — o refúgio</p>
+        <h2>Albero</h2>
+        <p class="alt">um dos últimos lugares seguros de Cvstodia</p>
+      </div>
+
+      <div class="ledge wide">
+        <h3>A espada nasceu de uma mulher</h3>
+        <p>Uma mulher pediu ao Milagre que a punisse pelos próprios pecados, batendo no peito com uma imagem do Torcido. O Milagre fez brotar da estatueta uma espada que a atravessou e a transformou em pedra: ela virou a <b>Pedra Ajoelhada</b>. A espada é a <b>Mea Culpa</b> — punho com a efígie do Torcido, lâmina debruada de espinhos.</p>
+        <p>Depois que você encontra Deogracias, um espinho novo é acrescentado ao punho com um propósito explícito: <b>ferir quem a empunha</b>, para se alimentar do sangue e da culpa dele. Esse espinho continua crescendo, e chega à forma final — a <em>Cvstodia do Pecado</em> — se você completar todas as Masmorras dos Confessores. Quando as Altas Vontades morrem, a espada vira pó junto com o Milagre.</p>
+      </div>
+
+      <div class="ledge wide" style="margin-top:18px">
+        <h3>O que você carrega</h3>
+        <dl class="sys">
+          <dt>Mea Culpa</dt>
+          <dd>Uma espada, a mesma do início ao fim. Melhora nos <b>Altares de Mea Culpa</b> pagando Lágrimas — um deles fica aqui em Albero, no porão da casa dos Beija-Feridas. Os <b>Corações de Mea Culpa</b> mudam o comportamento dela; as <b>Marcas de Martírio</b> compram golpes na árvore.</dd>
+          <dt>Lágrimas de Expiação</dt>
+          <dd>Moeda de tudo: melhorias, itens, e o preço da absolvição nas estátuas do Confessor.</dd>
+          <dt>Frascos de bílis</dt>
+          <dd>Sua cura. Poucos, recarregados no Prie-Dieu. Contar frascos antes de um chefe é metade da luta.</dd>
+          <dt>Fervor</dt>
+          <dd>A barra que enche batendo e esvazia rezando. São <b>17 orações</b> no total — 13 no lançamento, 4 acrescentadas pelas DLCs.</dd>
+          <dt>Contas de rosário e relíquias</dt>
+          <dd>Equipamento passivo: resistências, bônus e relíquias que mudam o que você <em>vê</em> — plataformas invisíveis, passagens ocultas, mortos que passam a falar.</dd>
+          <dt>Prie-Dieu</dt>
+          <dd>O genuflexório onde se salva. Recarrega frascos e devolve todos os inimigos ao lugar.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 04 -->
+  <div class="stratum" style="--z-a:#2b2419;--z-b:#0f1a16;--z-acc:#7fae90">
+    <canvas class="silho top" data-sil="drips" data-par="-18" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 04 — o fundo</p>
+        <h2>Cisterna Profanada</h2>
+        <p class="alt">Desecrated Cistern</p>
+      </div>
+
+      <div class="ledge wide">
+        <h3>A Culpa</h3>
+        <p>Cada morte deixa um <b>Fragmento de Culpa</b> exatamente onde você caiu, e a Culpa aparece no jogo como espinhos enroscados na ponta da barra de Fervor. Ela reduz o <b>Fervor máximo</b> e o <b>ganho de Lágrimas</b> — morrer torna mais difícil não morrer. Depois de seis mortes, ela para de crescer: pior do que isso não fica.</p>
+        <p>Há quatro formas de expiá-la no primeiro jogo: voltar ao lugar da queda e recolher o fragmento; usar uma <b>Estátua de Confessor</b>, pagando lágrimas; doar o suficiente à <b>igreja de Albero</b>; ou simplesmente <b>derrotar um chefe</b>, o que limpa tudo de uma vez.</p>
+        <div class="culpa">
+          <div class="bar" role="img" aria-label="Grau de culpa"><i id="cbar"></i></div>
+          <p class="readout">
+            <span>Mortes <b id="cdeaths">0</b>/6</span>
+            <span>Lágrimas <b id="ctears">1240</b></span>
+            <span>Ganho <b id="cgain">100%</b></span>
+            <span>Fervor máx. <b id="cferv">100%</b></span>
+          </p>
+          <div class="frags" id="cfrags" aria-live="polite"></div>
+          <div class="cmds">
+            <button class="cmd red" id="bDie">Morrer</button>
+            <button class="cmd" id="bRec" disabled>Recolher fragmento</button>
+            <button class="cmd" id="bConf" disabled>Confessar <span id="bCost"></span></button>
+            <button class="cmd" id="bBoss" disabled>Derrotar um chefe</button>
+            <button class="cmd" id="bReset">Reiniciar</button>
+          </div>
+          <p class="oracle" id="oracle">A conta está zerada. É o único estado que Cvstodia não tolera por muito tempo.</p>
+        </div>
+        <p style="margin-top:14px;font-size:.88rem;color:#8c8271">No segundo jogo a Culpa não desaparece: ela ganha um medidor próprio, separado do que afeta o Fervor, e só é expiada pelo Confessor da Cidade do Nome Sagrado — ou no Prie-Dieu, depois que esse Confessor acumula confissões suficientes.</p>
+      </div>
+
+      <div class="ledge wide" style="margin-top:20px">
+        <h3>Cante jondo — as 17 orações</h3>
+        <p>Cada oração do primeiro jogo leva o nome de uma forma real do flamenco andaluz. O ramo mais grave desse repertório chama-se <em>cante jondo</em>: canto fundo. Nada mais justo do que lê-las aqui embaixo.</p>
+        <div class="jondo" id="jondo"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 05 -->
+  <div class="stratum" style="--z-a:#0f1a16;--z-b:#2c0f0d;--z-acc:#d3584a">
+    <canvas class="silho bot" data-sil="columns" data-par="22" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 05 — o trono</p>
+        <h2>Deambulatório de Sua Santidade</h2>
+        <p class="alt">Deambulatory of His Holiness</p>
+      </div>
+      <div class="ledge wide">
+        <h3>A procissão</h3>
+        <p>Os chefes não são monstros: são gente deformada pelo que pediu. Cada um é um passo de procissão.</p>
+        <div id="proc1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 06 -->
+  <div class="stratum" style="--z-a:#2c0f0d;--z-b:#241a14;--z-acc:#dda862">
+    <canvas class="silho bot" data-sil="city" data-par="18" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="testament">
+        <div class="rule"></div>
+        <p class="t">Testamento II</p>
+        <p class="s">Cvstodia · 2023 · a subida</p>
+      </div>
+      <div class="zonehead">
+        <p class="depth">Zona 06 — mil anos depois</p>
+        <h2>Ruas dos Velórios</h2>
+        <p class="alt">Streets of Wakes · Cidade do Nome Sagrado</p>
+      </div>
+      <div class="ledge wide">
+        <h3>O Milagre órfão</h3>
+        <p class="lede">Com as Altas Vontades mortas no final verdadeiro do primeiro jogo, o Milagre ficou órfão, ferido, adormecido. Quase esquecido.</p>
+        <p>Mil anos depois — é o que sugere uma conquista do jogo — ele tenta voltar. Fraco demais para se encarnar, reaparece primeiro como <b>doença, deformidade e dor</b>, castigando inclusive os inocentes. Depois arma o plano: um coração no céu e uma <b>criança milagrosa</b> prestes a nascer, para que voltem a adorá-lo.</p>
+        <p>O Penitente é trazido de volta do outro lado do Sonho para impedir isso. A Mea Culpa não existe mais. Quem o guia agora é <b>Anunciada</b>; para chegar ao coração ele precisa reunir os <b>Três Remorsos</b> e enfrentar a <b>Arquiconfraria</b>, guardiã do coração, liderada por Eviterno.</p>
+      </div>
+      <div class="ledge right" style="margin-top:18px">
+        <h3>O corpo mudou</h3>
+        <dl class="sys">
+          <dt>Mais rápido</dt>
+          <dd>Dash, parry, salto duplo (a Passagem de Cinzas) e troca de arma no meio do combo. O jogo é construído para você alternar as três, não para escolher uma e esquecer.</dd>
+          <dt>Mais plataforma</dt>
+          <dd>Sinos, espelhos e barreiras de carne viram quebra-cabeças de travessia com tempo contado. As salas cobram os pés, não só as mãos.</dd>
+          <dt>A Culpa continua</dt>
+          <dd>Com medidor próprio e um Confessor só dela, na Cidade do Nome Sagrado.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 07 -->
+  <div class="stratum" id="forja" style="--z-a:#241a14;--z-b:#1b1f22;--z-acc:#a8bcc0">
+    <canvas class="silho bot" data-sil="towers" data-par="16" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 07 — a escolha</p>
+        <h2>Arsenal da Penitência</h2>
+        <p class="alt">Arsenal of Penitence · três armas, três chaves</p>
+      </div>
+      <div class="ledge wide">
+        <h3>Cada uma já foi de outro penitente</h3>
+        <p>Você escolhe uma no começo da peregrinação; as outras duas ficam largadas no mundo, cada uma num lugar específico. Todas evoluem em estátuas próprias — três níveis, pagos com Marcas de Martírio — e cada uma abre um tipo de caminho que as outras não abrem. Escolha para ler a ficha: a cor desta zona muda com ela.</p>
+        <div class="weapons" id="weapons" role="group" aria-label="Escolha uma arma"></div>
+        <div id="weapOut" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 08 -->
+  <div class="stratum" style="--z-a:#1b1f22;--z-b:#241521;--z-acc:#c9a24a">
+    <canvas class="silho bot" data-sil="arches" data-par="20" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 08 — a devoção</p>
+        <h2>Retábulo dos Favores</h2>
+        <p class="alt">Altarpiece of Favours</p>
+      </div>
+      <div class="ledge wide">
+        <h3>Devoção por encaixe</h3>
+        <p>No lugar das contas soltas do primeiro jogo, o segundo dá um retábulo: uma grade onde entram contas de rosário e figuras de santo. O que vale não é a peça — é a vizinhança dela. Escolha uma conta e coloque num nicho; duas da mesma família, lado a lado, acendem o favor.</p>
+        <div class="altar" style="margin-top:18px">
+          <div><div class="slots" id="slots" role="group" aria-label="Dezesseis nichos"></div></div>
+          <div>
+            <div class="pick" id="pickList" role="group" aria-label="Contas"></div>
+            <div class="favs" id="favs" aria-live="polite" style="margin-top:18px"></div>
+          </div>
+        </div>
+        <p style="margin-top:16px;font-size:.87rem;color:#8c8271">Exercício sobre as famílias de peças — cera, sino, espelho, sangue. O retábulo de verdade tem catálogo próprio, com contas como o <em>Ex-voto de uma Mãe Esperançosa</em> e peças de tamanhos diferentes; a lógica de vizinhança é esta.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 09 -->
+  <div class="stratum" style="--z-a:#241521;--z-b:#2b2a26;--z-acc:#e6dcc3">
+    <canvas class="silho top" data-sil="spires" data-par="-16" width="240" height="60" aria-hidden="true"></canvas>
+    <div class="inner">
+      <div class="zonehead">
+        <p class="depth">Zona 09 — o topo</p>
+        <h2>Templos Elevados</h2>
+        <p class="alt">Elevated Temples</p>
+      </div>
+      <div class="ledge wide">
+        <h3>A procissão da cidade</h3>
+        <div id="proc2"></div>
+      </div>
+      <div class="ledge wide" style="margin-top:20px">
+        <h3>Do primeiro para o segundo</h3>
+        <p>O I é sobre <b>carregar</b>: corpo lento, uma espada só, castigo que se acumula nas costas. O II é sobre <b>atravessar</b>: três chaves, mobilidade e um mundo que se abre conforme você troca de ferramenta. O I é mais duro e mais sombrio; o II é melhor de jogar.</p>
+        <p>Se puder, comece pelo I — e jogue a DLC <em>Wounds of Eventide</em> antes do II, porque é exatamente dali que a história do segundo parte: o coração no céu anunciando a volta do Milagre.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="end">
+    <div class="inner">
+      <p class="q">«Penitência nunca acaba.»</p>
+      <div class="colofao">
+        <b>Colofão</b>
+        Guia de fã. Nomes, sistemas, lugares e lore conferidos na <a href="https://blasphemous.fandom.com/wiki/Blasphemous_Wiki">Blasphemous Wiki</a> (Fandom, CC&#8209;BY&#8209;SA); a escrita, as leituras e os palpites são meus. <em>Blasphemous</em> e <em>Blasphemous II</em> são obra do The Game Kitchen, publicados pela Team17.
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root=document.documentElement;
+  if(!reduce) document.body.classList.add('js');
+  function px(c,x,y,w,h,col){ c.fillStyle=col; c.fillRect(x,y,w,h); }
+
+  /* ——— o Penitente ——— */
+  (function(){
+    var cv=document.getElementById('capirote'), c=cv.getContext('2d'), dark='#0c0a09', mid='#171310', gold='#d9b25c';
+    c.clearRect(0,0,cv.width,cv.height);
+    for(var y=0;y<48;y++){ var half=Math.round(y*0.46)+2; px(c,42-half,y+6,half*2,1,dark); }
+    px(c,20,40,44,3,mid);
+    for(var y2=0;y2<52;y2++){ var w=Math.round(16+y2*0.62); px(c,42-w,y2+54,w*2,1, y2%9===0? mid: dark); }
+    px(c,66,44,2,44,'#3a342b'); px(c,63,60,8,2,'#4a4236'); px(c,66,40,2,5,gold);
+    px(c,24,58,3,10,'#6e1f16');
+  })();
+
+  /* ——— cenários ——— */
+  var SIL={
+    spires:function(c,W,H){ var x=0; while(x<W){ var w=6+((x*7)%13), h=Math.round(H*(0.35+((x*13)%40)/100));
+      px(c,x,H-h,w,h,'#000');
+      if(w>10){ px(c,x+Math.floor(w/2)-1,H-h-7,2,7,'#000'); px(c,x+Math.floor(w/2)-3,H-h-5,6,2,'#000'); }
+      x+=w+2; } },
+    arches:function(c,W,H){ for(var x=0;x<W;x+=18){ px(c,x,H-26,4,26,'#000');
+      for(var i=0;i<8;i++){ px(c,x+4+i,H-26-Math.round(Math.sqrt(64-Math.pow(i-7,2))),1,3,'#000'); }
+      px(c,x+4,H-30,14,4,'#000'); } px(c,0,H-6,W,6,'#000'); },
+    drips:function(c,W,H){ px(c,0,0,W,7,'#000');
+      for(var x=0;x<W;x+=3){ var h=3+((x*11)%16); px(c,x,7,2,h,'#000'); if(((x*7)%23)<3) px(c,x,7+h,1,4,'#000'); } },
+    columns:function(c,W,H){ for(var x=2;x<W;x+=26){ px(c,x,H-40,7,40,'#000'); px(c,x-2,H-44,11,5,'#000'); px(c,x-1,H-4,9,4,'#000'); } px(c,0,H-3,W,3,'#000'); },
+    city:function(c,W,H){ var x=0; while(x<W){ var w=8+((x*3)%16), h=Math.round(H*(0.25+((x*17)%55)/100));
+      px(c,x,H-h,w,h,'#000');
+      for(var wy=H-h+3; wy<H-4; wy+=6){ for(var wx=x+2; wx<x+w-2; wx+=5){ if(((wx*wy)%7)<2) px(c,wx,wy,2,2,'#2a1e14'); } }
+      x+=w+1; } },
+    towers:function(c,W,H){ var x=0; while(x<W){ var w=10+((x*5)%10), h=Math.round(H*(0.4+((x*23)%50)/100));
+      px(c,x,H-h,w,h,'#000'); px(c,x-1,H-h-4,w+2,4,'#000'); px(c,x+Math.floor(w/2)-1,H-h-11,2,7,'#000'); x+=w+3; } },
+    village:function(c,W,H){ var x=0; while(x<W){ var w=14+((x*7)%12), h=Math.round(H*(0.22+((x*11)%28)/100));
+      px(c,x,H-h,w,h,'#000');
+      for(var i=0;i<w;i+=2){ px(c,x+i,H-h-Math.min(6,Math.round((w/2-Math.abs(i-w/2))*0.5)),2,7,'#000'); }
+      if(((x*13)%5)<2) px(c,x+2,H-h+4,4,4,'#3a2a18');
+      x+=w+3; } px(c,0,H-4,W,4,'#000'); },
+    roots:function(c,W,H){
+      px(c,0,H-5,W,5,'#000');
+      for(var x=0;x<W;x+=7){
+        var h=8+((x*17)%34);
+        for(var y=0;y<h;y++){ px(c, x+Math.round(Math.sin((y+x)*0.35)*3), H-5-y, 2,1,'#000'); }
+        if(((x*5)%3)===0) px(c,x-3,H-5-h,6,2,'#000');
+      }
+    }
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sil]'),function(cv){
+    var c=cv.getContext('2d'); c.clearRect(0,0,cv.width,cv.height);
+    (SIL[cv.getAttribute('data-sil')]||SIL.spires)(c,cv.width,cv.height);
+  });
+
+  /* ——— entrada das zonas ——— */
+  if(!reduce && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+    },{rootMargin:'0px 0px -18% 0px'});
+    Array.prototype.forEach.call(document.querySelectorAll('.zonehead'),function(z){ io.observe(z); });
+  }
+
+  /* ——— parallax ——— */
+  var pars=Array.prototype.slice.call(document.querySelectorAll('[data-par]')), tick=false;
+  function parallax(){
+    var vh=window.innerHeight;
+    pars.forEach(function(el){
+      var host=el.parentNode.getBoundingClientRect();
+      var p=(vh-host.top)/(vh+host.height);
+      el.style.transform='translate3d(0,'+(((p-.5)*2)*Number(el.getAttribute('data-par'))).toFixed(1)+'px,0)';
+    });
+  }
+  if(!reduce){
+    window.addEventListener('scroll',function(){ if(tick) return; tick=true;
+      requestAnimationFrame(function(){ parallax(); tick=false; }); },{passive:true});
+    window.addEventListener('resize',parallax);
+    parallax();
+  }
+
+  /* ——— a Culpa ——— */
+  var places=['Pátio dos Passos Silenciosos','Jondo','Telhados da Arquicatedral','Onde as Oliveiras Fenecem','Cisterna Profanada','Montanhas do Crepúsculo Infinito','Berço das Três Palavras','Ponte dos Três Calvários','Cemitério dos Picos','Lamentação e Ruína'];
+  var oracles=[
+    'A conta está zerada. É o único estado que Cvstodia não tolera por muito tempo.',
+    'Uma morte. O Milagre finge não ver — e anota.',
+    'Os espinhos já apertam a barra de Fervor. As lágrimas rendem menos.',
+    'Duas orações e nenhum fervor para elas. É assim que se começa a morrer de verdade.',
+    'Quatro quedas. Você anda por Cvstodia como quem deve a todos os santos.',
+    'Cinco. Uma volta ao lugar da queda resolveria metade disso.',
+    'Seis — o teto. Pior do que isso a Culpa não fica; pior do que isso fica só você.'
+  ];
+  var G={deaths:0,tears:1240,frags:[]};
+  var E={bar:document.getElementById('cbar'),d:document.getElementById('cdeaths'),tears:document.getElementById('ctears'),
+         gain:document.getElementById('cgain'),ferv:document.getElementById('cferv'),frags:document.getElementById('cfrags'),
+         rec:document.getElementById('bRec'),conf:document.getElementById('bConf'),cost:document.getElementById('bCost'),
+         boss:document.getElementById('bBoss'),or:document.getElementById('oracle')};
+  function drawGuilt(){
+    var d=G.deaths, cost=d*160;
+    E.bar.style.width=(d/6*100)+'%';
+    E.d.textContent=d; E.tears.textContent=G.tears;
+    E.gain.textContent=(100-d*10)+'%'; E.ferv.textContent=(100-d*8)+'%';
+    E.frags.innerHTML='';
+    G.frags.forEach(function(p){ var s=document.createElement('span'); s.className='frag'; s.textContent='◆ '+p; E.frags.appendChild(s); });
+    E.rec.disabled=!G.frags.length;
+    E.conf.disabled=(d===0||G.tears<cost);
+    E.boss.disabled=(d===0);
+    E.cost.textContent=cost? '('+cost+')':'';
+    E.or.textContent=oracles[d];
+    root.style.setProperty('--tint', String(d/6));
+  }
+  document.getElementById('bDie').addEventListener('click',function(){
+    G.tears-=Math.round(G.tears*.3);
+    G.deaths=Math.min(6,G.deaths+1);
+    G.frags.push(places[Math.floor(Math.random()*places.length)]);
+    drawGuilt();
+  });
+  E.rec.addEventListener('click',function(){ G.frags.pop(); G.deaths=Math.max(0,G.deaths-1); G.tears+=130; drawGuilt(); });
+  E.conf.addEventListener('click',function(){ G.tears-=G.deaths*160; G.deaths=0; G.frags=[]; drawGuilt(); });
+  E.boss.addEventListener('click',function(){ G.deaths=0; G.frags=[]; G.tears+=320; drawGuilt(); });
+  document.getElementById('bReset').addEventListener('click',function(){ G.deaths=0; G.tears=1240; G.frags=[]; drawGuilt(); });
+  drawGuilt();
+
+  /* ——— as 17 orações ——— */
+  var songs=[
+    ['Debla of the Lights','Debla · cante jondo','Canto feito a seco, sem guitarra nenhuma. Entre os palos, o mais nu.',0],
+    ['Seguiriya to your Eyes like Stars','Seguiriya · lamento em doze tempos','O palo do luto profundo. Não existe versão alegre dela.',0],
+    ['Saeta Dolorosa','Saeta · Semana Santa','Canto lançado da janela para a imagem que passa na procissão. O cortejo para para ouvir.',0],
+    ['Tiento to your Thorned Hairs','Tiento · grave e lento','Tatear o tom antes de atacá-lo. Oração de quem se defende medindo o mundo.',0],
+    ['Zarabanda of the Safe Haven','Zarabanda · dança proscrita','Escandalosa o bastante para ser proibida na Espanha do século XVI. Aqui virou abrigo.',0],
+    ['Campanillero to the Sons of the Aurora','Campanillero · rosário da aurora','Das irmandades que saíam de madrugada tocando campainhas para chamar ao rosário. Sinos antes do sol.',0],
+    ['Cante Jondo of the Three Sisters','Cante jondo · o canto fundo','Não é um palo: é o nome do ramo mais grave e mais antigo de todo o cante.',0],
+    ['Cantina of the Blue Rose','Cantiña · família alegre de Cádiz','O contrário do jondo: festivo, luminoso, de compasso vivo.',0],
+    ['Taranto to My Sister','Taranto · cante mineiro','Palo das minas de Almería, cantado por quem trabalhava debaixo da terra.',0],
+    ['Verdiales of the Forsaken Hamlet','Verdiales · fandango de Málaga','Rústico e festeiro, tocado por pandas de camponeses. Alegria amarrada a um nome de abandono.',0],
+    ['Mirabrás of the Return to Port','Mirabrás · cantiña de Cádiz','Com ares de pregão de feira. O único do rosário que fala de chegar.',0],
+    ['Tirana of the Celestial Bastion','Tirana · canção do séc. XVIII','Corria nos teatros espanhóis antes de virar matéria do flamenco.',0],
+    ['Lorquiana','Lorquiana · de Federico','Dos poemas populares recolhidos e recriados por García Lorca — o poeta que o jogo inteiro parafraseia.',0],
+    ['Solea of Excommunication','Soleá · a mãe dos palos','A forma de onde saíram quase todas as outras. Soleá vem de <em>soledad</em>: solidão.',1],
+    ['Zambra to the Resplendent Crown','Zambra · do Sacromonte','Dança de raiz mourisca, mantida viva pelos ciganos de Granada nas cuevas.',1],
+    ['Romance to the Crimson Mist','Romance · balada narrativa','A forma mais antiga da lista: o romance castelhano, que conta uma história cantada em versos.',1],
+    ['Aubade of the Nameless Guardian','Alborada · canto de madrugada','De despedida ou de vigília cumprida. Cabe a um guardião que ninguém nomeou.',0]
+  ];
+  var jEl=document.getElementById('jondo');
+  songs.forEach(function(s){
+    var d=document.createElement('div'); d.className='song';
+    d.innerHTML='<div class="pr">'+s[0]+(s[3]?'<span class="tagdlc">DLC</span>':'')+'</div>'+
+                '<div><span class="palo">'+s[1]+'</span><span class="txt">'+s[2]+'</span></div>';
+    jEl.appendChild(d);
+  });
+
+  /* ——— procissões ——— */
+  var proc1=[
+    ['·','Jogo base',''],
+    ['Warden of the Silent Sorrow','Guardião do Silencioso Pesar','A carne inchada do que sobrou da sua própria irmandade. O primeiro chefe é um espelho.'],
+    ['Ten Piedad','“Tenha piedade”','Gigante de pedra que pede clemência com o próprio nome enquanto tenta esmagar você.'],
+    ['Our Lady of the Charred Visage','Nossa Senhora do Rosto Carbonizado','Imagem que continuou sendo venerada depois de queimar. O convento inteiro é o relicário dela.'],
+    ['Tres Angustias','As Três Angústias','Três irmãs suspensas, cada uma um andar da mesma dor.'],
+    ['Perpetva','a irmã de Esdras','Aparece antes dele — e volta no meio da luta dele, o que muda tudo o que você achava daquele duelo.'],
+    ['Esdras, of the Anointed Legion','Esdras da Legião Ungida','Irmão e carcereiro. Um dos poucos que luta por amor.'],
+    ['Melquíades, the Exhumed Archbishop','o Arcebispo Exumado','Prelado desenterrado e remontado como brinquedo, entre bonecas.'],
+    ['Expósito, Scion of Abjuration','Rebento da Abjuração','Criança enjeitada que o Milagre resolveu atender. O horror é quem a gerou.'],
+    ['Quirce, Returned by the Flames','Devolvido pelas Chamas','Queimado por uma heresia que não cometeu, voltou do fogo com o fogo dentro.'],
+    ['Crisanta of the Wrapped Agony','Crisanta da Agonia Envolta','A campeã de Sua Santidade, e o exame final: parry, tempo e humildade.'],
+    ['His Holiness Escribar','/ Last Son of the Miracle','O centro da fé e o centro da doença. Duas formas, frascos contados.'],
+    ['·','DLC — The Stir of Dawn',''],
+    ['As quatro Amanecidas','Golden Blades · Bejeweled Arrow · Molten Thorn · Chiselled Steel','Quatro campeãs convocadas pela aurora, enfrentadas no Salão do Alvorecer.'],
+    ['Laudes, the First of the Amanecidas','a primeira delas','O desafio final do Stir of Dawn, depois das outras quatro.'],
+    ['·','DLC — Wounds of Eventide',''],
+    ['Isidora, Voice of the Dead','Voz dos Mortos',''],
+    ['Sierpes','a serpente','Escondida atrás de um dos segredos mais bem guardados do jogo.'],
+    ['Escribar, Sentinel of the Eternal Procession','Sentinela da Procissão Eterna','O confronto que amarra o final verdadeiro — e prepara o segundo jogo.']
+  ];
+  var proc2=[
+    ['·','Jogo base',''],
+    ['Great Preceptor Radamés','Grande Preceptor Radamés','Coberto de cacos de vidro, avança em investida. Alcance é a resposta.'],
+    ['Lesmes, Incorrupt Sacristan','o Sacristão Incorrupto','Autoridade eclesiástica em forma de parede.'],
+    ['Orospina, Lady Embroiderer','a Dama Bordadeira','Dança de lâminas: um dos duelos mais elegantes da série. Pune reação, premia antecipação.'],
+    ['Afilaor, Sentinel of the Emery','Sentinela do Esmeril','Guardião-amolador, feito de pedra de afiar e obstinação.'],
+    ['Benedicta of the Endless Orison','da Oração Sem Fim','Santidade cantada, autoridade de coro.'],
+    ['Odón of the Confraternity of Salt','da Confraria do Sal',''],
+    ['Sínodo, Hymn of the Thousand Voices','Hino das Mil Vozes','Na Torre Decepada; derrotá-lo abre o caminho para as Duas Luas.'],
+    ['Svsona, Fermosa Fembra','a Formosa Fêmea','Nas Duas Luas. Entrega a Chave Espelhada.'],
+    ['Faceless One, Chisel of Oblivion','Cinzel do Esquecimento',''],
+    ['Eviterno, First of the Penitents','/ Eviterno, Last Desecrator','Antes de você, houve outro: o capirote não era só seu. Lidera a Arquiconfraria que guarda o coração.'],
+    ['Incarnate Devotion','a Devoção Encarnada','A criança do Milagre, derrotada no instante seguinte ao próprio nascimento.'],
+    ['·','DLC — Mea Culpa',''],
+    ['Brother Asterion','Irmão Asterion','Persegue você por toda a DLC a mando de um mestre que ninguém nomeia.'],
+    ['Sor Cautiva Del Silencio','Irmã Cativa do Silêncio','']
+  ];
+  function renderProc(id,list){
+    var el=document.getElementById(id);
+    list.forEach(function(b){
+      if(b[0]==='·'){ var g=document.createElement('p'); g.className='procgrp'; g.textContent=b[1]; el.appendChild(g); return; }
+      var d=document.createElement('article'); d.className='boss';
+      d.innerHTML='<span class="nm">'+b[0]+'</span><span class="ep">'+b[1]+'</span>'+(b[2]?'<p>'+b[2]+'</p>':'');
+      el.appendChild(d);
+    });
+  }
+  renderProc('proc1',proc1); renderProc('proc2',proc2);
+
+  /* ——— as três armas ——— */
+  var weapons=[
+    {k:'veredicto',nm:'Veredicto',role:'Turíbulo · sinos · fogo',acc:'#d9b25c',
+     prev:'do Ungido', where:'Enterramentos Sagrados',
+     stats:[['Dano','o maior dos três'],['Alcance','o maior dos três'],['Velocidade','a menor'],['Parry','não permite']],
+     txt:'Mangual lento em forma de incensário gigante. Bate mais forte e mais longe que qualquer outra arma, derruba inimigos menores com o próprio impacto e converte Fervor em dano — o que a coloca em disputa direta com as suas orações: ou você reza, ou você queima. Não dá para aparar com ela na mão.',
+     key:'Chave: toca sinos, e sino aberto move portões e plataformas.',
+     draw:function(c){ px(c,6,38,44,3,'#4a4236'); px(c,48,4,4,36,'#5a5044'); px(c,44,2,12,10,'#d9b25c'); px(c,47,12,6,4,'#8a6f32'); }},
+    {k:'sarmiento',nm:'Sarmiento & Centella',role:'Florete e adaga · espelhos · raio',acc:'#a8bcc0',
+     prev:'do Veterano', where:'Palácio dos Bordados',
+     stats:[['Dano','o menor por golpe'],['Alcance','o menor'],['Velocidade','a maior'],['Parry','permite']],
+     txt:'O par mais rápido do arsenal, e o de maior dano por segundo depois de carregado. A carga se chama <em>Verdadera Destreza</em> — nome de um tratado real de esgrima espanhola — e só sobe esquivando e aparando; trocar de arma zera tudo. Carregada, dá dano de raio de graça, o que atrapalha contra quem resiste a raio, porque não dá para desligar.',
+     key:'Chave: ativa espelhos e teleporta por dentro deles.',
+     draw:function(c){ px(c,4,36,54,2,'#c9d6d8'); px(c,4,33,5,7,'#7d8a8c'); px(c,10,10,30,2,'#9fb0b2'); px(c,8,8,4,6,'#6d797a'); }},
+    {k:'ruego',nm:'Ruego Al Alba',role:'Espada · carne · sangue',acc:'#c04a3c',
+     prev:'do Punido', where:'Coroa de Torres',
+     stats:[['Dano','médio'],['Alcance','médio'],['Velocidade','média'],['Parry','permite e bloqueia']],
+     txt:'Lâmina serrilhada de um só gume, debruada de contas de rosário. É a mais equilibrada das três e a mais parecida com a Mea Culpa — a escolha natural de quem volta do primeiro jogo. O <b>Pacto de Sangue</b> e seus desdobramentos dão dano místico e, mais importante, fazem você recuperar vida ferindo: a única cura em combate fora dos frascos.',
+     key:'Chave: o golpe de mergulho rompe barreiras de carne.',
+     draw:function(c){ px(c,6,34,50,5,'#8d8577'); px(c,4,30,6,13,'#3f3a33'); px(c,52,32,4,9,'#b5372a'); px(c,20,26,3,6,'#b5372a'); }}
+  ];
+  var wEl=document.getElementById('weapons'), wOut=document.getElementById('weapOut'), forja=document.getElementById('forja');
+  weapons.forEach(function(w){
+    var b=document.createElement('button');
+    b.className='weap'; b.setAttribute('aria-pressed','false');
+    b.innerHTML='<canvas width="64" height="46" aria-hidden="true"></canvas><span class="wr">'+w.role+'</span><span class="wn">'+w.nm+'</span>';
+    w.draw(b.querySelector('canvas').getContext('2d'));
+    b.addEventListener('click',function(){
+      Array.prototype.forEach.call(wEl.children,function(x){ x.setAttribute('aria-pressed',String(x===b)); });
+      forja.style.setProperty('--z-acc', w.acc);
+      wOut.innerHTML='<p class="stats">'+w.stats.map(function(s){ return '<span>'+s[0]+' <b>'+s[1]+'</b></span>'; }).join('')+'</p>'+
+        '<p>'+w.txt+'</p><p style="font-size:.9rem;color:#8c8271">Já foi empunhada pelo Penitente conhecido como <b>'+w.prev.replace('do ','o ')+'</b>. Se você não começar com ela, está esperando em: '+w.where+'.</p>'+
+        '<span class="key">'+w.key+'</span>';
+    });
+    wEl.appendChild(b);
+  });
+  wOut.innerHTML='<p style="color:#8c8271">Nenhuma tomada. As três aguentam o jogo inteiro — o que muda é qual porta você abre primeiro e, portanto, em que ordem a cidade se desdobra.</p>';
+
+  /* ——— retábulo ——— */
+  var beads=[
+    {id:'a',n:'Conta de cera vermelha',f:'Cera',c:'#9c3128'},
+    {id:'b',n:'Conta de cera azul',f:'Cera',c:'#3b5a78'},
+    {id:'c',n:'Badalo miúdo',f:'Sino',c:'#c9a24a'},
+    {id:'d',n:'Corda de campanário',f:'Sino',c:'#8a7440'},
+    {id:'e',n:'Lasca de espelho',f:'Espelho',c:'#9fb3b8'},
+    {id:'f',n:'Azougue',f:'Espelho',c:'#5f8579'},
+    {id:'g',n:'Gota perpetuada',f:'Sangue',c:'#8d1f15'},
+    {id:'h',n:'Espinho lacrado',f:'Sangue',c:'#4d0f0c'}
+  ];
+  var favText={
+    Cera:'Selo de cera — resistência dobrada a dano elemental.',
+    Sino:'Repique — o Fervor não desce enquanto o som durar.',
+    Espelho:'Reflexo — metade do golpe volta para quem bateu.',
+    Sangue:'Sangria — ferir devolve um sopro de vida.'
+  };
+  var grid=new Array(16).fill(null), held=null;
+  var sEl=document.getElementById('slots'), pEl=document.getElementById('pickList'), fEl=document.getElementById('favs');
+  function byId(i){ for(var k=0;k<beads.length;k++) if(beads[k].id===i) return beads[k]; return null; }
+  beads.forEach(function(b){
+    var t=document.createElement('button');
+    t.className='pk'; t.setAttribute('aria-pressed','false'); t.setAttribute('data-b',b.id);
+    t.innerHTML='<i style="background:'+b.c+'"></i><span>'+b.n+'</span><em>'+b.f+'</em>';
+    t.addEventListener('click',function(){
+      held=(held===b.id)?null:b.id;
+      Array.prototype.forEach.call(pEl.children,function(x){ x.setAttribute('aria-pressed',String(x.getAttribute('data-b')===held)); });
+    });
+    pEl.appendChild(t);
+  });
+  for(var i=0;i<16;i++){
+    (function(idx){
+      var s=document.createElement('button'); s.className='slot';
+      s.addEventListener('click',function(){ if(grid[idx]) grid[idx]=null; else if(held) grid[idx]=held; drawAltar(); });
+      sEl.appendChild(s);
+    })(i);
+  }
+  function drawAltar(){
+    var tied=new Array(16).fill(false), fams={};
+    for(var i=0;i<16;i++){
+      var a=grid[i]; if(!a) continue;
+      var fa=byId(a).f, r=Math.floor(i/4), col=i%4;
+      [[r-1,col],[r+1,col],[r,col-1],[r,col+1]].forEach(function(p){
+        if(p[0]<0||p[0]>3||p[1]<0||p[1]>3) return;
+        var j=p[0]*4+p[1];
+        if(grid[j] && byId(grid[j]).f===fa){ tied[i]=true; tied[j]=true; fams[fa]=true; }
+      });
+    }
+    Array.prototype.forEach.call(sEl.children,function(s,i){
+      s.className='slot'+(tied[i]?' tied':''); s.innerHTML='';
+      if(grid[i]){
+        var b=byId(grid[i]), sp=document.createElement('span'); sp.style.background=b.c; s.appendChild(sp);
+        s.setAttribute('aria-label','Nicho '+(i+1)+': '+b.n+(tied[i]?', em vizinhança':''));
+      } else s.setAttribute('aria-label','Nicho '+(i+1)+', vazio');
+    });
+    fEl.innerHTML='';
+    var keys=Object.keys(fams);
+    if(!keys.length){ fEl.innerHTML='<p style="color:#8c8271">Nenhum favor aceso. Conta solta só enfeita o retábulo.</p>'; }
+    else {
+      keys.forEach(function(k){ var p=document.createElement('p'); p.innerHTML='<b>'+k+'</b>'+favText[k]; fEl.appendChild(p); });
+      var t=document.createElement('p'); t.innerHTML='<b>Devoção</b>'+(keys.length*25)+' de 100'; fEl.appendChild(t);
+    }
+  }
+  grid[0]='a'; grid[1]='b'; grid[5]='c'; grid[6]='d'; grid[10]='g'; grid[14]='h';
+  drawAltar();
+
+  try{
+    if(window.claude && window.claude.hot){
+      window.claude.hot.snapshot(function(){ return {g:G,grid:grid}; });
+      var prev=window.claude.hot.data;
+      if(prev && prev.g){ G.deaths=prev.g.deaths||0; G.tears=prev.g.tears; G.frags=prev.g.frags||[]; drawGuilt(); }
+      if(prev && prev.grid && prev.grid.length===16){ grid=prev.grid; drawAltar(); }
+    }
+  }catch(e){}
+})();
+</script>
+
+</body></html>

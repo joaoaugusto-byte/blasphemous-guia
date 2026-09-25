@@ -1,0 +1,63 @@
+SOB O CAPIROTE — site estático
+Blasphemous I & II · corte vertical de Cvstodia
+
+O QUE TEM AQUI
+--------------
+index.html   a página inteira (HTML, CSS, JavaScript e a pixel art, tudo dentro
+             do próprio arquivo — não há pasta de imagens nem dependências)
+LEIA-ME.txt  este arquivo
+
+Nada aqui pede login, conta ou servidor.
+
+
+PARA VER AGORA
+--------------
+Dê dois cliques em index.html. Abre em qualquer navegador.
+
+
+PARA MANDAR PARA ALGUÉM
+-----------------------
+Envie o .zip. A pessoa descompacta e clica no index.html. Só isso.
+
+
+PARA HOSPEDAR NA INTERNET
+-------------------------
+Netlify Drop (o mais rápido, não precisa de conta para testar)
+  1. Abra https://app.netlify.com/drop
+  2. Arraste ESTA PASTA inteira (ou o .zip) para a área indicada
+  3. Em segundos você recebe um endereço do tipo nome-aleatorio.netlify.app
+  4. Criando conta, dá para renomear o site e apontar domínio próprio
+
+Netlify por conta (para atualizar depois)
+  Sites > Add new site > Deploy manually > arraste a pasta.
+  Para publicar uma versão nova, arraste a pasta de novo no mesmo site.
+
+GitHub Pages
+  Suba os arquivos num repositório, vá em Settings > Pages e escolha a branch.
+  O index.html precisa estar na raiz do que for publicado.
+
+Cloudflare Pages
+  Workers & Pages > Create > Pages > Upload assets > arraste a pasta.
+
+Em qualquer um deles não há nada a configurar: sem build, sem comando, sem
+variável de ambiente. É um site estático de um arquivo só.
+
+
+DETALHES QUE IMPORTAM
+---------------------
+- Mantenha o index.html junto com esta pasta ao subir. Se você renomear o
+  arquivo, o servidor pode não achar a página inicial — em hospedagem estática
+  o nome index.html é o que abre sozinho.
+- As fontes (Jacquard 24, Silkscreen, Crimson Pro) vêm do Google Fonts, então
+  precisam de internet. Sem conexão a página funciona igual, só troca por uma
+  fonte serifada comum — o layout, as cores e a pixel art continuam iguais.
+- Há um link externo para a Blasphemous Wiki no rodapé, usado como fonte.
+- A página respeita "reduzir movimento" do sistema: quem tiver isso ligado vê
+  tudo parado, sem parallax nem animação de entrada das zonas.
+
+
+CRÉDITOS
+--------
+Guia de fã. Nomes, sistemas, lugares e lore conferidos na Blasphemous Wiki
+(Fandom, CC-BY-SA). Blasphemous e Blasphemous II são obra do The Game Kitchen,
+publicados pela Team17.
